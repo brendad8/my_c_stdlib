@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
@@ -17,8 +18,7 @@ void print_str(str string);
 bool str_valid(str);
 bool str_match(str a, str b);
 bool str_contains(str src, str pattern);
-
-// str str_sub(str src, size_t begin, size_t end);
+str str_sub(str src, size_t begin, size_t end);
 // str find_first(str src, str pattern);
 // str find_last(str src, str pattern);
 // str str_remove_prefix(str src, str prefix);
@@ -115,7 +115,20 @@ bool str_contains(str src, str pattern)
     }
     return false;
 }
-// str str_sub(str src, isize_t begin, isize_t end);
+
+str str_sub(str src, size_t begin, size_t end)
+{
+    if (!str_valid(src))
+        return (str){ .data = NULL, .size = 0 };
+
+    if (begin > end || end > src.size)
+        return (str){ .data = NULL, .size = 0 };
+
+    return (str){
+        .data = src.data + begin,
+        .size = end - begin
+    };
+}
 // str find_first(str src, str pattern);
 // str find_last(str src, str pattern);
 // str str_remove_prefix(str src, str prefix);
